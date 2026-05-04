@@ -26,5 +26,11 @@
 			"binding": "kv_auth",
 			"id": "2e40d2a1961a45729d1ab86b2015366f"
 		}
+	],
+	"r2_buckets": [
+		{
+			"bucket_name": "env-site-media",
+			"binding": "env_site_media"
+		}
 	]
 }
