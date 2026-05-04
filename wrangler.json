@@ -16,5 +16,15 @@
 			"database_id": "bc9394e1-d405-4505-a99a-cb8f6c52df95",
 			"remote": true
 		}
+	],
+	"kv_namespaces": [
+		{
+			"binding": "kv_cache",
+			"id": "1df3eea420454078bb33a666a37b3303"
+		},
+		{
+			"binding": "kv_auth",
+			"id": "2e40d2a1961a45729d1ab86b2015366f"
+		}
 	]
 }
