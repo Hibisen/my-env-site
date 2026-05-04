@@ -1,0 +1,13 @@
+{
+  "name": "choicefortheplanet",
+  "type": "javascript",
+  "compatibility_date": "2024-12-16",
+  "env": {
+    "production": {
+      "name": "choicefortheplanet-prod"
+    },
+    "staging": {
+      "name": "choicefortheplanet-staging"
+    }
+  }
+}
