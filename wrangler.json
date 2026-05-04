@@ -1,13 +1,20 @@
 {
-  "name": "choicefortheplanet",
-  "type": "javascript",
-  "compatibility_date": "2024-12-16",
-  "env": {
-    "production": {
-      "name": "choicefortheplanet-prod"
-    },
-    "staging": {
-      "name": "choicefortheplanet-staging"
-    }
-  }
+	"name": "choicefortheplanet",
+	"compatibility_date": "2024-12-16",
+	"env": {
+		"production": {
+			"name": "choicefortheplanet-prod"
+		},
+		"staging": {
+			"name": "choicefortheplanet-staging"
+		}
+	},
+	"d1_databases": [
+		{
+			"binding": "env_site_db",
+			"database_name": "env_site_db",
+			"database_id": "bc9394e1-d405-4505-a99a-cb8f6c52df95",
+			"remote": true
+		}
+	]
 }
