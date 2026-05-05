@@ -1,6 +1,6 @@
-import { build } from '@cloudflare/next-on-pages/next-config';
-
 /** @type {import('next').NextConfig} */
-const nextConfig = {};
+const nextConfig = {
+  reactStrictMode: true,
+};
 
-export default build(nextConfig);
+module.exports = nextConfig;
