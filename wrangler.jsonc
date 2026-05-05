@@ -1,7 +1,6 @@
 {
   "name": "my-env-site",
   "type": "javascript",
-  "main": "src/index.ts",
   "compatibility_date": "2025-01-01",
   "functions_dir": "functions",
   "d1_databases": [
