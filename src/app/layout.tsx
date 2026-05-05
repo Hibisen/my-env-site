@@ -1,8 +1,9 @@
-import type { Metadata } from "next";
+import type { Metadata } from 'next';
+import './globals.css';
 
 export const metadata: Metadata = {
-  title: "Choice for the Planet",
-  description: "Cloudflare Pages + Next.js",
+  title: 'Choice for the Planet',
+  description: '環境関連情報サイト',
 };
 
 export default function RootLayout({
@@ -12,7 +13,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="ja">
-      <body>{children}</body>
+      <body suppressHydrationWarning>{children}</body>
     </html>
   );
 }
