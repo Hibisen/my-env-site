@@ -24,11 +24,11 @@ export const onRequest: PagesFunction = async (context) => {
   }
 
   try {
-    const slug = params.slug as string[];
+    const rest = params.rest as string[];
 
     switch (request.method) {
       case 'GET': // Read
-        const postId = slug[1];
+        const postId = rest[1];
         if (!postId) {
           const posts = await env.DB.prepare(
             'SELECT * FROM posts ORDER BY created_at DESC LIMIT 50'
@@ -70,7 +70,7 @@ export const onRequest: PagesFunction = async (context) => {
 
       case 'PUT': // Update
         const updateData = await request.json();
-        const updateId = slug[1];
+        const updateId = rest[1];
         const updateResult = await env.DB.prepare(
           `UPDATE posts SET title = ?, content = ?, theme = ?, category = ?, subcategory = ?,
            country = ?, industry = ?, term = ?, affiliate_url = ?, tags = ?, updated_at = CURRENT_TIMESTAMP
@@ -93,7 +93,7 @@ export const onRequest: PagesFunction = async (context) => {
         });
 
       case 'DELETE': // Delete
-        const deleteId = slug[1];
+        const deleteId = rest[1];
         const deleteResult = await env.DB.prepare(
           'DELETE FROM posts WHERE id = ?'
         ).bind(deleteId).run();
