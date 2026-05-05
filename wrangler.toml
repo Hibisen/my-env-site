@@ -1,7 +1,11 @@
 name = "my-env-site"
 type = "javascript"
 compatibility_date = "2025-01-01"
-functions_dir = "functions"
+
+pages_build_configuration = {
+  build_command = "npm run build",
+  destination_dir = ".next"
+}
 
 [[d1_databases]]
 binding = "DB"
@@ -22,4 +26,4 @@ bucket_name = "env-site-media"
 jurisdiction = "eu"
 
 [env.production]
-vars = { SITE_PASSWORD = "your_password", ADMIN_PASSWORD = "your_admin_password" }
+vars = { SITE_PASSWORD = "your_password", ADMIN_PASSWORD = "hibisen" }
