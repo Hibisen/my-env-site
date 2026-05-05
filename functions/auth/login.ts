@@ -1,51 +1,69 @@
-import type { PagesFunction } from '../../types/pages';
+import { FunctionRequest, FunctionResponse } from '@cloudflare/workers-types';
 
-export const onRequest: PagesFunction = async (context) => {
-  const { request, env } = context;
-
-  if (request.method !== 'POST') {
-    return new Response('Method Not Allowed', { status: 405 });
+export async function onRequest(context: {
+  request: FunctionRequest;
+  env: any;
+  data: any;
+}): Promise<FunctionResponse> {
+  if (context.request.method !== 'POST') {
+    return new Response(JSON.stringify({ error: 'Method not allowed' }), {
+      status: 405,
+      headers: { 'Content-Type': 'application/json' },
+    });
   }
 
   try {
-    const { password } = await request.json();
-    const SITE_PASSWORD = env.SITE_PASSWORD as string;
+    const body = await context.request.json();
+    const { password } = body;
 
-    if (!password || password !== SITE_PASSWORD) {
+    if (!password) {
+      return new Response(
+        JSON.stringify({ error: 'Password is required' }),
+        { status: 400, headers: { 'Content-Type': 'application/json' } }
+      );
+    }
+
+    const adminPassword = context.env.ADMIN_PASSWORD || 'hibisen';
+
+    if (password !== adminPassword) {
       return new Response(
         JSON.stringify({ error: 'Invalid password' }),
         { status: 401, headers: { 'Content-Type': 'application/json' } }
       );
     }
 
-    const sessionKey = crypto.randomUUID();
-    const sessionData = JSON.stringify({
-      authenticated: true,
-      createdAt: new Date().toISOString(),
-    });
+    // セッショントークンを生成
+    const sessionToken = `session_${Date.now()}_${Math.random().toString(36).substring(7)}`;
 
-    // KV にセッション保存（TTL: 7日）
-    await env.KV_AUTH.put(sessionKey, sessionData, {
-      expirationTtl: 7 * 24 * 60 * 60,
-    });
+    // KV にセッション情報を保存（24時間）
+    if (context.env.KV_AUTH) {
+      await context.env.KV_AUTH.put(
+        `session:${sessionToken}`,
+        JSON.stringify({ created_at: new Date().toISOString() }),
+        { expirationTtl: 24 * 60 * 60 }
+      );
+    }
 
-    // Cookie にセッションキーを設定
     const response = new Response(
-      JSON.stringify({ success: true, sessionKey }),
+      JSON.stringify({ success: true, token: sessionToken }),
       {
         status: 200,
-        headers: {
-          'Content-Type': 'application/json',
-          'Set-Cookie': `session=${sessionKey}; Path=/; HttpOnly; SameSite=Strict; Max-Age=${7 * 24 * 60 * 60}`,
-        },
+        headers: { 'Content-Type': 'application/json' },
       }
+    );
+
+    // Cookie を設定
+    response.headers.append(
+      'Set-Cookie',
+      `session=${sessionToken}; Path=/; HttpOnly; SameSite=Lax; Max-Age=${24 * 60 * 60}`
     );
 
     return response;
   } catch (error) {
+    console.error('Login error:', error);
     return new Response(
-      JSON.stringify({ error: 'Internal Server Error' }),
+      JSON.stringify({ error: 'Internal server error' }),
       { status: 500, headers: { 'Content-Type': 'application/json' } }
     );
   }
-};
+}
