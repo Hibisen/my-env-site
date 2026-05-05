@@ -1,6 +1,12 @@
+cat > wrangler.json << 'EOF'
 {
 	"name": "choicefortheplanet",
+	"type": "javascript",
 	"compatibility_date": "2024-12-16",
+	"pages_build_configuration": {
+		"build_command": "npm run build",
+		"destination_dir": ".next"
+	},
 	"env": {
 		"production": {
 			"name": "choicefortheplanet-prod"
@@ -11,7 +17,7 @@
 	},
 	"d1_databases": [
 		{
-			"binding": "env_site_db",
+			"binding": "DB",
 			"database_name": "env_site_db",
 			"database_id": "bc9394e1-d405-4505-a99a-cb8f6c52df95",
 			"remote": true
@@ -19,18 +25,19 @@
 	],
 	"kv_namespaces": [
 		{
-			"binding": "kv_cache",
+			"binding": "KV_CACHE",
 			"id": "1df3eea420454078bb33a666a37b3303"
 		},
 		{
-			"binding": "kv_auth",
+			"binding": "KV_AUTH",
 			"id": "2e40d2a1961a45729d1ab86b2015366f"
 		}
 	],
 	"r2_buckets": [
 		{
 			"bucket_name": "env-site-media",
-			"binding": "env_site_media"
+			"binding": "R2_BUCKET"
 		}
 	]
 }
+EOF
