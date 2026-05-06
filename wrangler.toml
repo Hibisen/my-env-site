@@ -1,11 +1,14 @@
 name = "my-env-site"
 type = "javascript"
 compatibility_date = "2025-01-01"
+<<<<<<< HEAD
 
 pages_build_configuration = {
   build_command = "npm run build",
   destination_dir = ".next"
 }
+=======
+>>>>>>> 87ff5c3c5b3fe4f7d3027919cd3cb37f52b0ac95
 
 [[d1_databases]]
 binding = "DB"
