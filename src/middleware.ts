@@ -1,21 +1,34 @@
 import { NextRequest, NextResponse } from 'next/server';
 
-export function middleware(request: NextRequest) {
-  const pathname = request.nextUrl.pathname;
+export async function middleware(request: NextRequest) {
+  const { pathname } = request.nextUrl;
 
-  // 除外パス
-  const excludedPaths = ['/login', '/api', '/functions', '/_next'];
-  const isExcluded = excludedPaths.some((path) => pathname.startsWith(path));
+  // =====================================
+  // 1. Next.js 内部・静的ファイルは完全スルー
+  // =====================================
+  if (
+    pathname.startsWith('/_next') || 
+    pathname.match(/\.(ico|png|jpg|jpeg|svg|css|js|webp|gif|woff|woff2|ttf|eot)$/i)
+  ) {
+    return NextResponse.next();
+  }
+
+  // =====================================
+  // 2. 認証を除外するパス
+  // =====================================
+  const excludedPaths = ['/login', '/api'];
+  const isExcluded = excludedPaths.some(
+    (path) => pathname === path || pathname.startsWith(path + '/')
+  );
 
   if (isExcluded) {
     return NextResponse.next();
   }
 
-  // 保護されたパス
-  const protectedPaths = ['/admin'];
-  const isProtected = protectedPaths.some((path) => pathname.startsWith(path));
-
-  if (isProtected) {
+  // =====================================
+  // 3. /admin パスの保護
+  // =====================================
+  if (pathname.startsWith('/admin')) {
     const sessionCookie = request.cookies.get('session');
 
     if (!sessionCookie) {
@@ -23,9 +36,14 @@ export function middleware(request: NextRequest) {
     }
   }
 
+  // =====================================
+  // 4. その他のパスは通す
+  // =====================================
   return NextResponse.next();
 }
 
 export const config = {
-  matcher: ['/((?!_next/static|_next/image|favicon.ico).*)'],
+  matcher: [
+    '/((?!_next/static|_next/image|favicon.ico|public).*)',
+  ],
 };

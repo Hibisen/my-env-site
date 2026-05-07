@@ -1,7 +1,10 @@
 name = "my-env-site"
-type = "javascript"
 compatibility_date = "2025-01-01"
 compatibility_flags = [ "nodejs_compat" ]
+
+[pages_build_configuration]
+build_command = "npm run build"
+destination_dir = ".next"
 
 [[d1_databases]]
 binding = "DB"

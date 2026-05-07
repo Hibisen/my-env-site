@@ -1,3 +1,5 @@
+export const runtime = 'edge';
+
 export default function AdminDashboard() {
   return (
     <div className="space-y-8">

@@ -1,7 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
 
-export const runtime = 'edge';
-
 const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'hibisen';
 
 export async function POST(request: NextRequest) {
@@ -32,7 +30,7 @@ export async function POST(request: NextRequest) {
     );
 
     // Cookie にセッショントークンを設定（24時間）
-    response.cookies.set('admin_session', sessionToken, {
+    response.cookies.set('session', sessionToken, {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
       sameSite: 'lax',
