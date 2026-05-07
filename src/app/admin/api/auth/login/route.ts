@@ -32,7 +32,7 @@ export async function POST(request: NextRequest) {
     );
 
     // Cookie にセッショントークンを設定（24時間）
-    response.cookies.set('admin_session', sessionToken, {
+    response.cookies.set('session', sessionToken, {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
       sameSite: 'lax',

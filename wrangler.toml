@@ -22,4 +22,4 @@ bucket_name = "env-site-media"
 jurisdiction = "eu"
 
 [env.production]
-vars = { SITE_PASSWORD = "your_password", ADMIN_PASSWORD = "hibisen" }
+vars = { SITE_PASSWORD = "hibisen", ADMIN_PASSWORD = "h1b1sen" }
