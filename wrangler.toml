@@ -1,7 +1,7 @@
 name = "my-env-site"
 compatibility_date = "2025-01-01"
 compatibility_flags = ["nodejs_compat"]
-pages_build_output_dir = ".vercel/output/static"
+pages_build_output_dir = ".next"
 
 [pages_build_configuration]
 build_command = "npm run build"
