@@ -14,7 +14,7 @@ export async function login(password: string) {
 }
 
 export async function logout() {
-  const response = await fetch('/functions/auth/logout', {
+  const response = await fetch('/admin/api/auth/logout', {
     method: 'POST',
   });
 

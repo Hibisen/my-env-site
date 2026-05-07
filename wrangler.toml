@@ -1,6 +1,7 @@
 name = "my-env-site"
 compatibility_date = "2025-01-01"
-compatibility_flags = [ "nodejs_compat" ]
+compatibility_flags = ["nodejs_compat"]
+pages_build_output_dir = ".vercel/output/static"
 
 [pages_build_configuration]
 build_command = "npm run build"
@@ -24,5 +25,6 @@ binding = "R2_BUCKET"
 bucket_name = "env-site-media"
 jurisdiction = "eu"
 
-[env.production]
-vars = { SITE_PASSWORD = "your_password", ADMIN_PASSWORD = "hibisen" }
+[vars]
+SITE_PASSWORD = "hibisen"
+ADMIN_PASSWORD = "h1b1sen"
